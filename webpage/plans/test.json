@@ -1,0 +1,18 @@
+{
+   "Name":"TUTTI_ANDIAMO_MIO_PLANO",
+   "Inspectors": [
+       "Tonna",
+       "Mamma"
+        ],
+   "Users":[
+       "Commandore",
+       "Bombardiero"],
+   "TasksOrdered": false ,
+   "Tasks": {
+       "Numero":["Task", "Status"] ,
+       "1": ["Wyjmij zawleczke", "Undone"] ,
+       "2": ["Spierdalaj", "Done"] ,
+       "3": ["Odepnij granat od paska", "Undone"] ,
+       "4": ["Rzucaj granat", "Ongoing"]
+    }
+}
