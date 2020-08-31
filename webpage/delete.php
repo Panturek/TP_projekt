@@ -2,17 +2,15 @@
 
 	session_start();
 	
-	require_once "connect.php";
+	require_once "config.php";
 	
-	$bye = $_SESSION['delete'];
-	
-	$polaczenie=@new mysqli($host, $db_user, $db_password, $db_name);
-	
-	if($polaczenie->connect_errno!=0){
-		echo "Error!: ".$polaczenie->connect_errno." Opis: ".$polaczenie->connect_error;
+    $bye = $_SESSION['delete'];
+    
+	if($conn->connect_errno!=0){
+		echo "Error!: ".$conn->connect_errno." Opis: ".$conn->connect_error;
 	}
 	else{
-		if($polaczenie->query("DELETE FROM fiszki WHERE fiszki.id = '$bye';"))
+		if($conn->query("DELETE FROM fiszki WHERE fiszki.id = '$bye';"))
 		{
 			
 		}
@@ -22,7 +20,7 @@
 		}
 	}
 	
-	$polaczenie->close();
+	$conn->close();
 	
 	header("Location: fiszki.php");
 	exit();

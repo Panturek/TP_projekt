@@ -5,17 +5,15 @@
 	$front = $_POST['front'];
 	$back = $_POST['back'];
 	
-	require_once "connect.php";
-
-	$polaczenie=@new mysqli($host, $db_user, $db_password, $db_name);
+	require_once "config.php";
 
 	$owner = $_SESSION['id'];
 	
-	if($polaczenie->connect_errno!=0){
-		echo "Error!: ".$polaczenie->connect_errno." Opis: ".$polaczenie->connect_error;
+	if($conn->connect_errno!=0){
+		echo "Error!: ".$conn->connect_errno." Opis: ".$conn->connect_error;
 	}
 	else{
-		if($polaczenie->query("INSERT INTO fiszki(ownerId, front, back) 
+		if($conn->query("INSERT INTO fiszki(ownerId, front, back) 
 			VALUES ('$owner','$front', '$back')"))
 		{
 			$_SESSION['dodano'] = true;
@@ -27,7 +25,7 @@
 		}
 	}
 
-	$polaczenie->close();
+	$conn->close();
 	
 	header("Location: dodaj.php");
 	exit();
