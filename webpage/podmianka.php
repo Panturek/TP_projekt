@@ -6,12 +6,10 @@
 	$id=$_SESSION['id'];
 	$aus=false;
 	
-	require_once "connect.php";
+	require_once "config.php";
 
-	$polaczenie=@new mysqli($host, $db_user, $db_password, $db_name);
-
-	if($polaczenie->connect_errno!=0){
-		echo "Error!: ".$polaczenie->connect_errno." Opis: ".$polaczenie->connect_error;
+	if($conn->connect_errno!=0){
+		echo "Error!: ".$conn->connect_errno." Opis: ".$conn->connect_error;
 	}
 	
 			
@@ -19,7 +17,7 @@
 			
 		
 		if(!$aus){
-			if($rezultat=@$polaczenie->query(
+			if($rezultat=@$conn->query(
 			sprintf("SELECT COUNT(*) AS \"num\" FROM fiszki WHERE ownerId='$id'"))){
 				$wiersz=$rezultat->fetch_assoc();
 				if($wiersz['num'] > 1){
@@ -29,7 +27,7 @@
 		}
 		
 		do
-			if($rezultat=@$polaczenie->query(
+			if($rezultat=@$conn->query(
 			sprintf("SELECT * FROM fiszki WHERE ownerId=".$id." ORDER BY RAND() LIMIT 1"))){
 
 				$wiersz=$rezultat->fetch_assoc();
@@ -41,5 +39,5 @@
 		echo $wiersz['front'].'@'.$wiersz['back'];
 	}
 	
-	$polaczenie->close();
+	$conn->close();
 ?>

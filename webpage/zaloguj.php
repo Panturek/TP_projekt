@@ -7,12 +7,10 @@
 		exit();
 	}
 
-	require_once "connect.php";
-
-	$polaczenie=@new mysqli($host, $db_user, $db_password, $db_name);
-
-	if($polaczenie->connect_errno!=0){
-		echo "Error!: ".$polaczenie->connect_errno." Opis: ".$polaczenie->connect_error;
+    require_once "config.php";
+    
+	if($conn->connect_errno!=0){
+		echo "Error!: ".$conn->connect_errno." Opis: ".$conn->connect_error;
 	}
 	else{
 
@@ -28,9 +26,9 @@
 		$login=htmlentities($login, ENT_QUOTES, "UTF-8");
 
 
-		if($rezultat=@$polaczenie->query(
-			sprintf("SELECT * FROM uzytkownicy WHERE user='%s'",
-			mysqli_real_escape_string($polaczenie,$login))))
+		if($rezultat=@$conn->query(
+			sprintf("SELECT * FROM users WHERE user='%s'",
+			mysqli_real_escape_string($conn,$login))))
 			{
 			$ilu_userow=$rezultat->num_rows;
 			if($ilu_userow>0){
@@ -63,7 +61,7 @@
 		}
 	}
 
-	$polaczenie->close();
+	$conn->close();
 
 
 ?>
