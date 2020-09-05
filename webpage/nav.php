@@ -29,15 +29,6 @@
 						<a class="nav-link" href="index.php"> Start </a>
 					</li>
 					
-					<li class="nav-item" id = "fiszki">
-						<?php 
-							if($_SESSION['zalogowany'] == true)
-								echo '<a class="nav-link" id="fiszkiok" href = "fiszki.php"> Plany </a>';
-							else
-								echo '<a class="nav-link" id="fiszkinieok"> Plany </a>';
-						?>
-					</li>
-					
 					<li class="nav-item" id = "zdjecia">
 						<a class="nav-link" href="galeria.php"> Zajęcia </a>
 					</li>
