@@ -1,4 +1,5 @@
 <?php
+
     include_once('config.php');
     $task = isset($_GET['task']) ? mysqli_real_escape_string($conn, $_GET['task']) :  "";
     $sql = "SELECT * FROM `tpprojekt`.`rest_tasks` WHERE task='{$task}';";

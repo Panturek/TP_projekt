@@ -3,5 +3,5 @@ create table reviewers (
     plan_id text not null,
     user_id int NOT null,
     assignment_date datetime not null,
-    discharge_date datetime not null
+    discharge_date datetime
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
