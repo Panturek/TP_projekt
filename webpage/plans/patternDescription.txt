@@ -1,0 +1,27 @@
+{
+    "meta":{
+        "Name":"TUTTI_ANDIAMO_MIO_PLANO",
+        "Description": "Krótki opis planu, może nie tak krótki bo w bazie jest na niego 200 znaków"
+    },
+    "TasksOrdered": false, // czy wyświetlać taski jako lista uporządkowana de facto
+    "StatesAllowed":[ // stany do wyboru przy wykonywaniu planu. 
+        "Undone",
+        "Ongoing",
+        "Done"
+    ],
+    "StatesDisplay": "Text", 
+    /*  
+        Text (default gdy jest zdefiniowane stateAllowed), Domyślnie pierwszy ze stateAllowed
+        Checkbox (default gdy nie ma stateAllowed), stany: 0 / 1, domyślnie 0 
+        Forward (wyświetl >> NEXT_state) w kolejności takiej jak nazwy w stateAllowed
+    */
+    "Tasks": {
+        "Wyjmij zawleczke": "Undone",
+        "Spierdalaj": "Undone",
+        "Odepnij granat od paska": "Undone" ,
+        "Rzucaj granat": "Undone"
+    }
+    /*
+        Ogólnie: nazwa: state
+    */
+}

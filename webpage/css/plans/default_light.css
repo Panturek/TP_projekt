@@ -1,0 +1,113 @@
+body {
+    background-color: #fffccc;
+}
+p{
+    color:black;
+}
+.task_name{
+    color: #888999;
+}
+
+.list_column {
+    float: left;
+    width: 38%;
+    height: 70vmin;
+    padding: 0px;
+    color: #888999; 
+    background-color: #fffccc;
+}
+
+.plan_view {
+    float: left;
+    width: 62%;
+    height: 70vmin;
+    padding: 0px;
+    color: #888999; 
+    background-color: #dddaaa;
+}
+
+p.mode.active{
+    background-color: #fffccc;
+    color: #666666;
+}
+
+.mode{
+    font-size: 25px;
+    padding: 8px;
+    padding-left: 15px;
+    background-color: #dddaaa;
+    color: #aaaaaa;
+}
+
+p.mode{
+    float: left;
+    width: 50%;
+    cursor: pointer;
+}
+
+p.mode:hover{
+    background-color: #eeebbb;
+    color: #eeeeee;
+}
+
+p.modes{
+    background-color: #ddc000;
+    width: 100%;
+    clear: both;
+}
+
+.plan_name{
+    margin-left: 10px;
+}
+.plan_name:hover{
+    color: #555500;
+    display: block;
+    cursor: pointer;
+}
+.plan_item{
+    float: left;
+}
+.plan_state {
+    color: red;
+    float: right;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.state > ul {
+    display:none;
+}
+.state > ol {
+    display:none;
+}
+.task{
+    clear: both;
+}
+.task > .details{
+    float: left;
+    margin-left:10%;
+    max-width: 70%;
+}
+.task > .state{
+    color: blue;
+    float: right;
+    margin-right: 10%;
+    max-width: 10%;
+}
+
+.user{
+    font-size: 16px;
+}
+
+.progress{
+    font-size: 14px;
+    min-height: 30px;
+    cursor: pointer;
+}
+.progress > .plan_data{
+    min-width: 60%;
+}
+
+.hidden{
+    display: none;
+}
