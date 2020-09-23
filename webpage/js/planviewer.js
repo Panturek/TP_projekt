@@ -22,14 +22,14 @@ function setNewState(plan_id, user_id, task_id, state ) {
 
 function arrayToList(arr, plan_id, user_id, id) {
     len = $(arr).length;
-    var order = "ul"; 
-    var list = '<' + order + ' id="' + id + '" >';
+    
+    var list = '<ul id="' + id + '" >';
     for (var i = 0; i < len; i++) {
         var li = '<li alt="' + plan_id + ',' + user_id + ',' + id + ','+ arr[i] + '">'
             + arr[i] + '</li>';
         list += li;
     }
-    list += '</' + order + '>';
+    list += '</ul>';
     
     return list;
 }
@@ -92,7 +92,6 @@ function makeHtmlExecutiveElements( data, plan_id, user_id=0, append_to= "#tasks
     var features = data['features'];
     var tasks = data['tasks'];
     var defStates = features['states'];
-    var isOrdered = features['ordered'];
     var display = features['display'];
     var startdate = features['startdate'];
     var enddate = features['enddate'];
@@ -100,7 +99,6 @@ function makeHtmlExecutiveElements( data, plan_id, user_id=0, append_to= "#tasks
     
     if (!readOnly) classes.push("exec");
     else classes.push("view");
-    if (isOrdered) classes.push("ordered");
     if (startdate) classes.push("startdate");
     if (enddate) classes.push("enddate");
     if (display)
@@ -110,16 +108,16 @@ function makeHtmlExecutiveElements( data, plan_id, user_id=0, append_to= "#tasks
     
     $(append_to).text("");
     var keys = Object.keys(tasks);
-    var ordnung = [ "-" ];
-    if (isOrdered) {
-        for (var i = 0; i < keys.length; i++) {
-            var next = tasks[keys[i]]['next'];
+    var ordnung = ["-"];
+    
+    for (var i = 0; i < keys.length; i++) {
+        var next = tasks[keys[i]]['next'];
             if (next != "t0") {
-                ordnung.push(next);
+            ordnung.push(next);
             }
         }
-        keys = ordnung;
-    }
+    keys = ordnung;
+    
 
     for (var i = 1; i < keys.length; i++) {
         var id = keys[i];

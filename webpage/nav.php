@@ -30,6 +30,10 @@
                     <li class="nav-item" id = "plany">
                         <a class="nav-link" href="plans.php"> Plany </a>
                     </li>
+
+                    <li class="nav-item" id = "noweplany">
+                        <a class="nav-link" href="makeplan.php"> Utwórz Plan </a>
+                    </li>
                     
                     <?php
                         if($_SESSION['zalogowany'] == false){

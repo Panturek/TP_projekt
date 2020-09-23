@@ -63,8 +63,8 @@
             <h5> Opis: </h5>
                 <textarea class="planfeat" maxlength="400" id="description"> </textarea>
         
-            <h5> Zapisz Kolejność: 
-                <input type="checkbox" name="order" id="order"> </h5>
+            <h5> Otwarty dostęp: 
+                <input type="checkbox" name="open" id="open"> </h5>
             
             <div>
                 <h5> Wyświetlanie stanu: </h5>
@@ -79,12 +79,12 @@
 
     <div class="plan_view">
         <h3 class="mode" style="float: left;">Zadania: <span id="taskCnt">0</span></h3>
-        <div class="mode new" id="submit">Zatwierdź</div>
+        
         <div style="clear:both;"></div>
         <div id="tasks">
         </div>
         <div style="clear:both"> </div>
-        <div id="plusik" alt='0'> + <div>
+        <div id="plusik" class="greenbutton" alt='0'> + </div> <div class="greenbutton" id="submit">Zatwierdź</div>
     </div>
 
 </main>
@@ -92,107 +92,6 @@
 <footer>
     <?php include("./footer.php"); ?>
 </footer>
-<script>
-
-    $(function(){
-        $("#types_list").collapse('show');
-    });
-
-    $('div.display_type').click(function(){
-        if( $(this).attr('id') == "disp_txt" ){
-            $("#types_list").collapse('show');
-        }
-        else{
-            $("#types_list").collapse('hide');
-        }
-
-        $('div.display_type').removeClass('active');
-        $(this).addClass('active');
-    });
-
-    function deleteTask(taskId){
-        var subject = '#tasks > .task#'+taskId;
-        $(subject).remove();
-        var taskCnt = parseInt($('#taskCnt').text()) - 1;
-        $('#taskCnt').text(taskCnt);
-    }
-
-    $('#plusik').click(function(){
-        var taskCnt = parseInt($('#taskCnt').text()) + 1;
-        var taskId = parseInt($(this).attr('alt')) + 1;
-        
-        var new_task ='<div id="'+taskId+'" class="task">'
-                    +'<div class="positioning"><div class="up">^</div><div class="down">v</div></div>'
-                    +'<textarea></textarea>'
-                    +'<div class="minusik" onclick="deleteTask('+taskId+')">-</div> </div>';
-        $('#tasks').append(new_task);
-        $(this).attr('alt', taskId);
-        $('#taskCnt').text(taskCnt);
-
-        var elem = $('#tasks');
-        elem.scrollTop = elem.scrollHeight;
-
-    });
-
-
-
-    $('#submit').click(function(){
-        var tasksCount = parseInt($('#plusik').attr('alt'));
-        var name=$('#name').val();
-        var description = $('#description').val();
-        
-        var plan = new Object;
-        var features = new Object;
-        var display = $('.display_type.active').attr('alt');
-        var states = $('#types_list > textarea').val().split(',');
-
-        for( var i=0; i<states.length; i++ ){
-            states[i] = states[i].trim();
-        }
-
-        features.ordered = $('#order').prop('checked');
-        features.states = states;
-        features.display = display;
-        features.startdate=false;
-        features.enddate=false;
-
-        t0 = new Object;
-        t0.next="t1";
-        var tasksMap = [["t0", t0]];
-        for(var i=1; i <= tasksCount; i++){
-            var elem = '#'+i+'.task > textarea';
-            if( $(elem).length ){
-                if( $(elem).val() != "" ){
-                    var task = new Object;
-                    task.text = $(elem).val();
-                    if (tasksCount > i) task.next = "t"+(i+1);
-                    else task.next="t0";
-                    tasksMap.push( ["t"+i, task] );
-                }
-            }
-        }
-        _map = new Map(tasksMap);
-        var tasks = Object.fromEntries(_map);
-        
-        plan.features=features;
-        plan.tasks=tasks;
-
-        var request = new Object;
-        request.name = name;
-        request.description = description;
-        request.author= $('#usr').text().trim();
-        request.plan = plan;
-
-        $.post("newplan.php",
-            JSON.stringify(request),
-            function(data){
-                console.log(data);
-            }
-        );
-
-    });
-    
-
-</script>
+<script src="js/makeplan.js"> </script>
 </body>
 </html>

@@ -28,6 +28,10 @@ p{
     overflow-y: scroll;
 }
 
+.plans_list{
+    margin: 10px;
+}
+
 .mode.active{
     background-color: #fffccc;
     color: #666666;
@@ -41,16 +45,6 @@ p{
     color: #aaaaaa;
 }
 
-.new {
-    float: right;
-    text-decoration: none;
-}
-
-.new:hover{
-    color: #fffccc;
-    cursor: pointer;
-    text-decoration: none;
-}
 
 p.mode{
     float: left;
@@ -186,20 +180,42 @@ textarea.display_type {
     border: 2px solid #35bb22;
     background-color: #fffccc;
 }
-#plusik{
+
+.greenbutton{
     border: 3px solid #35bb22;
     color: #35bb22;
     margin: 10px;
     border-radius: 6px;
-    width: 40px;
-    line-height: 28px;
-    height: 40px;
     padding: 2px 0;
-    font-size: 36px;
     text-align: center;
     display: block;
     cursor: pointer;
+    height: 40px;
 }
+
+#plusik{
+    width: 40px;
+    font-size: 36px;
+    line-height: 28px;
+    float:left;
+}
+
+#submit{
+    float:right;
+    font-size: 24px;
+    line-height: 28px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 20px;
+    text-decoration: none;
+}
+
+#submit:hover{
+    color: #fffccc;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 .minusik{
     border: 3px solid #b32424;
     color: #b32424;
@@ -231,3 +247,6 @@ textarea.display_type {
     cursor: pointer;
 }
 
+#found{
+    border-color: 2px solid #aaaaaa;
+}

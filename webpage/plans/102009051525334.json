@@ -1,3 +1,21 @@
 {
-    "taco": "bell"
+    "features":{
+        "open": true,
+        "states":[ 
+            "Undone",
+            "Ongoing",
+            "Done"
+        ],
+        "display": "text", 
+        "startdate": false,
+        "enddate": false
+    },
+
+    "tasks": {
+        "t0": {"next":"t1"},
+        "t1": {"text":"Wyjmij zawleczke", "next":"t3" },
+        "t2": {"text":"Spierdalaj", "next":"t0" },
+        "t3": {"text":"Odepnij granat od paska", "next":"t4" },
+        "t4": {"text":"Rzucaj granat", "next":"t2"}
+    }
 }

@@ -88,17 +88,20 @@
             <p class="mode card active" id="insp">Nadzorowane</p>
             <p class="mode card" id="exec">Wykonywane</p>
         </div>
+        <div style="clear:both;"></div>
         <div class="plans_list"> 
             <?php echo $rev_items; ?>
         </div>
         <div class="plans_list hidden">
+            <input class="planfeat" type="text"
+            placeholder="Szukaj" name="search" id="search"> </input>
+            <div id="found"></div>
             <?php echo $exec_items; ?>
         </div>
     </div>
 
     <div class="plan_view">
-        <h3 class="mode" style="float: left;">Zadania:</h3> 
-        <a class="mode new" href = "makeplan.php">Nowy</a>
+        <h3 class="mode" style="float: left;">Zadania:</h3>
         <div style="clear:both;"></div>
         <div id="tasks">
             <?php 
@@ -145,6 +148,24 @@
         var content = getReviewed(plan_id, user_id);
     });
 
+    $("#search").on('input', function(){
+        var str=$(this).val();
+        $.get("getplans.php?q="+str,
+        function (data) {
+            $('#found').empty();
+            if(data.trim()!="" && str.trim()!="" && data.trim()!="\"\""){
+                var found = data.replace('"', '').split(',');
+                console.log(data);
+                for(var i=0; i < found.length-1; i++){
+                    var extracted = found[i].split(':');
+                    var item = '<div class="proposition" onclick=id="requestAdd('+extracted[0]+')" >'+extracted[1]+': '+extracted[2]+'</div>' 
+                    $('#found').append(item);
+                }
+            }
+        }
+    );
+    });
+    
 </script>
     
 </body>

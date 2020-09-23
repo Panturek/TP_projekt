@@ -14,12 +14,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     }
 
     include_once("config.php");
-    $select_reviewers = "select * from tpprojekt.reviewers
+    $select_reviewers = "select * from $db_name.reviewers
                         where user_id like ".$user_id.
                         " and plan_id like ".$plan_id;
 
     $select_executed = "select executives.user_id, users.user
-                        from tpprojekt.executives, tpprojekt.users
+                        from $db_name.executives, $db_name.users
                         where executives.plan_id like ".$plan_id."
                         and executives.user_id like users.id";
 
