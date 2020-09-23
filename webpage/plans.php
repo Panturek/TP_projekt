@@ -1,10 +1,10 @@
 <?php
-	session_start();
+    session_start();
 
-	if( (isset($_SESSION['zalogowany'])==false ) || ($_SESSION['zalogowany']==false)){
-		header('Location: index.php');
-		exit();
-	}
+    if( (isset($_SESSION['zalogowany'])==false ) || ($_SESSION['zalogowany']==false)){
+        header('Location: index.php');
+        exit();
+    }
     $_SESSION['pageid'] = 'plany';
     
     include_once("config.php");
@@ -85,8 +85,8 @@
 <main>
     <div class="list_column">
         <div class="modes"> 
-            <p class="mode active" id="insp">Nadzorowane</p>
-            <p class="mode " id="exec">Wykonywane</p>
+            <p class="mode card active" id="insp">Nadzorowane</p>
+            <p class="mode card" id="exec">Wykonywane</p>
         </div>
         <div class="plans_list"> 
             <?php echo $rev_items; ?>
@@ -97,7 +97,9 @@
     </div>
 
     <div class="plan_view">
-        <h3 class="mode">Zadania:</h3>
+        <h3 class="mode" style="float: left;">Zadania:</h3> 
+        <a class="mode new" href = "makeplan.php">Nowy</a>
+        <div style="clear:both;"></div>
         <div id="tasks">
             <?php 
             //    include_once('planToHtml.php');
@@ -121,20 +123,9 @@
         if( $(this).hasClass("active") ){
             return;
         }
-        $( ".mode" ).toggleClass("active");
+        $( ".mode.card" ).toggleClass("active");
         $( ".plans_list" ).toggleClass("hidden");
     });
-
-    function parseTasks(json){
-        if( !json )
-            return;
-        var items = [];
-        $.each(json, function(key,value) {
-            if(value['text'])
-                items.push( value['text'] );
-        });
-        setTasksField(items);
-    }
 
     $(".plan_name.review").click(function(){
             var plan_id = $(this).attr('id');

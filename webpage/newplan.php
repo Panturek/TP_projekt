@@ -12,8 +12,6 @@ function add_new_plan($entityBody, $author_id){
     $CHK = 10 - ( array_sum(str_split($plan_id)) % 10 );
     $plan_id = $plan_id.$CHK;
     
-    if ( !isJson($entityBody) )
-        return 'err';
     $fp = fopen('plans/'.$plan_id.'.json', 'w');
     fwrite($fp, $entityBody);
     fclose($fp);
@@ -23,14 +21,18 @@ function add_new_plan($entityBody, $author_id){
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
 
-    $author_id = '10';
     $entityBody = file_get_contents('php://input');
-    $plan_id = add_new_plan($entityBody, $author_id);
 
-    if($plan_id=='err')
+    if ( !isJson($entityBody) )
         die("corrupted json file sent");
 
-    $insert_plan = "INSERT INTO `$db_name`.`plans` (`plan_id`, `name`, `description`, `status` ) VALUES ('$plan_id', 'NAME', 'DESC', 'CREATED' );";
+    $entity = json_decode($entityBody);
+    $name = $entity->name;
+    $description = $entity->description;
+    $author_id = $entity->author;
+    $plan_id = add_new_plan(json_encode($entity->plan), $author_id);
+
+    $insert_plan = "INSERT INTO `$db_name`.`plans` (`plan_id`, `name`, `description`, `status` ) VALUES ('$plan_id', '$name', '$description', 'CREATED' );";
     $insert_reviewer = "INSERT INTO `$db_name`.`reviewers` (`plan_id`, `user_id`, `assignment_date`, `discharge_date` ) VALUES ('$plan_id', '$author_id', now(), null );";
 
     $query_status = mysqli_query($conn, $insert_plan) && mysqli_query($conn, $insert_reviewer);

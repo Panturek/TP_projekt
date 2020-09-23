@@ -15,6 +15,7 @@ p{
     padding: 0px;
     color: #888999; 
     background-color: #fffccc;
+    overflow-y: scroll;
 }
 
 .plan_view {
@@ -24,9 +25,10 @@ p{
     padding: 0px;
     color: #888999; 
     background-color: #dddaaa;
+    overflow-y: scroll;
 }
 
-p.mode.active{
+.mode.active{
     background-color: #fffccc;
     color: #666666;
 }
@@ -39,9 +41,20 @@ p.mode.active{
     color: #aaaaaa;
 }
 
+.new {
+    float: right;
+    text-decoration: none;
+}
+
+.new:hover{
+    color: #fffccc;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 p.mode{
     float: left;
-    width: 50%;
+    min-width: 50%;
     cursor: pointer;
 }
 
@@ -76,11 +89,14 @@ p.modes{
 
 .state > ul {
     display:none;
+    list-style-type: circle;
+    margin-left: 0px;
+    padding: 0px;
 }
-.state > ol {
-    display:none;
-}
+
 .task{
+    margin-left: 10px;
+    border-bottom: 1px dotted #fffccc;
     clear: both;
 }
 .task > .details{
@@ -93,6 +109,7 @@ p.modes{
     float: right;
     margin-right: 10%;
     max-width: 10%;
+    cursor: pointer;
 }
 
 .user{
@@ -103,6 +120,9 @@ p.modes{
     font-size: 14px;
     min-height: 30px;
     cursor: pointer;
+    margin-bottom: 3px;
+    border-color: #dddaaa;
+    border-bottom: 2px dashed;
 }
 .progress > .plan_data{
     min-width: 60%;
@@ -111,3 +131,103 @@ p.modes{
 .hidden{
     display: none;
 }
+.deleted{
+    display: none;
+}
+
+.meta_list{
+    padding:10px;
+}
+
+.planfeat{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+textarea.planfeat{
+    width: 100%;
+    max-height: 300px;
+    min-height: 70px;
+}
+
+.task > textarea{
+    display: block;
+    width: 50vw;
+    max-height: 200px;
+    min-height: 70px;
+    float:left;
+    margin: 10px;
+    margin-top: 0px;
+}
+
+input#order{
+    margin-left:20px;
+}
+
+.display_type{
+    width: 50%;
+    padding: 2px;
+    border: 2px solid #dddaaa;
+    border-radius: 4px;  
+    margin-left: 40px;
+    cursor: pointer;
+}
+
+textarea.display_type {
+    width: 50%;
+    padding: 2px;
+    border: 2px solid #dddaaa;
+    border-radius: 4px;  
+    margin-left: 40px;
+    cursor: pointer;
+}
+
+.display_type.active{
+    border: 2px solid #35bb22;
+    background-color: #fffccc;
+}
+#plusik{
+    border: 3px solid #35bb22;
+    color: #35bb22;
+    margin: 10px;
+    border-radius: 6px;
+    width: 40px;
+    line-height: 28px;
+    height: 40px;
+    padding: 2px 0;
+    font-size: 36px;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+}
+.minusik{
+    border: 3px solid #b32424;
+    color: #b32424;
+    margin: 10px;
+    border-radius: 6px;
+    width: 40px;
+    line-height: 24px;
+    height: 40px;
+    padding: 2px 0;
+    font-size: 36px;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    float: right;
+}
+
+.positioning{
+    float:left;
+}
+
+.positioning > div{
+    display: block;
+    cursor: pointer;
+    min-width: 10px;
+}
+
+.positioning > div:hover{
+    color: #666666;
+    cursor: pointer;
+}
+

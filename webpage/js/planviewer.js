@@ -1,35 +1,64 @@
+function foldStates() { 
+    $('.task > .state > ul').css('display', 'none');
+    $('.task > .state > .curr').css('display', 'block');
+}
 
-function arrayToList( arr, ordered=false ) {
+function setNewState(plan_id, user_id, task_id, state ) {
+    if (plan_id == 0)
+        return;
+    var request = new Object();
+    request.plan_id = plan_id;
+    request.user_id = user_id;
+    request.task_id = task_id;
+    request.state = state;
+    $.post("setstate.php",
+        JSON.stringify(request),
+        function (data) {
+
+        }, "json"
+    );
+    getExecuted(plan_id, user_id);
+}
+
+function arrayToList(arr, plan_id, user_id, id) {
     len = $(arr).length;
-    var order = "ul"
-    if (ordered) order = "ol"; 
-    var list = '<' + order + '>';
-    for (var i = 0; i < len ; i++) {
-        list += '<li>'+ arr[i] +'</li>';
+    var order = "ul"; 
+    var list = '<' + order + ' id="' + id + '" >';
+    for (var i = 0; i < len; i++) {
+        var li = '<li alt="' + plan_id + ',' + user_id + ',' + id + ','+ arr[i] + '">'
+            + arr[i] + '</li>';
+        list += li;
     }
     list += '</' + order + '>';
+    
     return list;
+}
+
+function setExecutivesStatus(data) {
+    $.each(data, function (key, value) {
+        var elem = '#' + key +'.task > .state';
+        $(elem).append('<div class="curr">'+data[key]['state']+'</div>');
+    });
 }
 
 function getUserProgress(user_id, plan_id) {
     var request = new Object();
     request.plan_id = plan_id;
     request.user_id = user_id;
-    console.log('1');
     $.post("plandata.php",
-        JSON.stringify( request ),
+        JSON.stringify(request),
         function (data) {
             var append_to = '#' + user_id + ".progress > .plan_data";
-            var height = makeHtmlExecutiveElements(data, append_to);
-            $('#' + user_id + '.progress').height( height * 23);
+            var height = makeHtmlExecutiveElements(data, plan_id, user_id, append_to, true);
+            $('#' + user_id + '.progress').height(height * 23);
         }, "json"
     );
     
     $.post("planstate.php",
         JSON.stringify(request),
-        function (data) {
-            console.log(data);
-        }, "json"
+        function(data){
+            setExecutivesStatus(data);
+        },"json"
     );
 }
 
@@ -51,7 +80,15 @@ function makeHtmlReviewedElements(data) {
     }
 }
 
-function makeHtmlExecutiveElements( data, append_to= "#tasks" ) {
+function changeState(plan_id, id) {
+    foldStates();
+    var item = '#' + id + '.task > .state ';
+    $(item + ' > ul').css('display', 'block');
+    $(item + ' > ul').attr('alt', plan_id + ' ' +id );
+    $(item + '> .curr').css('display', 'none');
+}
+
+function makeHtmlExecutiveElements( data, plan_id, user_id=0, append_to= "#tasks", readOnly=false ) {
     var features = data['features'];
     var tasks = data['tasks'];
     var defStates = features['states'];
@@ -60,8 +97,9 @@ function makeHtmlExecutiveElements( data, append_to= "#tasks" ) {
     var startdate = features['startdate'];
     var enddate = features['enddate'];
     var classes = [];
-    classes.push("exec");
-
+    
+    if (!readOnly) classes.push("exec");
+    else classes.push("view");
     if (isOrdered) classes.push("ordered");
     if (startdate) classes.push("startdate");
     if (enddate) classes.push("enddate");
@@ -71,13 +109,12 @@ function makeHtmlExecutiveElements( data, append_to= "#tasks" ) {
         classes.push('text');
     
     $(append_to).text("");
-    var statesList = arrayToList(defStates);
     var keys = Object.keys(tasks);
     var ordnung = [ "-" ];
     if (isOrdered) {
         for (var i = 0; i < keys.length; i++) {
             var next = tasks[keys[i]]['next'];
-            if (next != "-1") {
+            if (next != "t0") {
                 ordnung.push(next);
             }
         }
@@ -85,24 +122,29 @@ function makeHtmlExecutiveElements( data, append_to= "#tasks" ) {
     }
 
     for (var i = 1; i < keys.length; i++) {
-        task = tasks[keys[i]];
+        var id = keys[i];
+        task = tasks[id];
+        var statesList = arrayToList( defStates, plan_id, user_id, id );
         var elem = '<div class="task ' + classes.join(" ")
-            + '" id="' + keys[i] + '">'
+            + '" id="' + id + '">'
             + '<div class="details">' + task['text'] + '</div>'
-            + '<div class="state '+display+'">' + statesList + '</div>'
+            + '<div class="state ' + display + '" '
+                + (readOnly? '': 'onclick="changeState(' + plan_id +', \''+ id + '\')' )
+                + ' ">' + statesList + '</div>'
             + '<div class="startdate' + ( startdate? "": " hidden" ) + '">__DATE__</div>'
             + '<div class="enddate' + ( enddate? "": " hidden" ) + '">__DATE__</div>'
             + '</div>';
         $(elem).appendTo(append_to);
     };
-    return ( keys.length - 1 );
-}
 
-function setExecutivesStatus(data) {
-    $.each(data, function(key, value){
-        var elem = '#' + key +'.task > .state';
-        $(elem).append(data[key]['state']);
+    $('li').click(function () {
+        var params = $(this).attr('alt').split(',');
+        setNewState(params[0], params[1], params[2], params[3]);
     });
+
+    var h = ( keys.length - 1 ) ;
+    $('#tasks').height( h * 26 );
+    return h;
 }
 
 function getExecuted(plan_id, user_id) {
@@ -113,7 +155,7 @@ function getExecuted(plan_id, user_id) {
     $.post("plandata.php",
         JSON.stringify( request ),
         function (data) {
-            makeHtmlExecutiveElements(data);
+            makeHtmlExecutiveElements(data, plan_id, user_id);
         }, "json"
     );
     
@@ -123,6 +165,7 @@ function getExecuted(plan_id, user_id) {
             setExecutivesStatus(data);
         }, "json"
     );
+    return 1;
 }
 
 function getReviewed(plan_id, user_id) {
@@ -136,4 +179,5 @@ function getReviewed(plan_id, user_id) {
             makeHtmlReviewedElements( data );
         }, "json"
     );
+    return 1;
 }
