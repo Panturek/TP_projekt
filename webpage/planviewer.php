@@ -150,20 +150,23 @@
 
     $("#search").on('input', function(){
         var str=$(this).val();
-        $.get("getplans.php?q="+str,
-        function (data) {
-            $('#found').empty();
-            if(data.trim()!="" && str.trim()!="" && data.trim()!="\"\""){
-                var found = data.replace('"', '').split(',');
-                console.log(data);
-                for(var i=0; i < found.length-1; i++){
-                    var extracted = found[i].split(':');
-                    var item = '<div class="proposition" onclick=id="requestAdd('+extracted[0]+')" >'+extracted[1]+': '+extracted[2]+'</div>' 
-                    $('#found').append(item);
+        var user_id = '<?php echo $_SESSION['id']; ?>';
+        
+        $.get("getplans.php?q="+str+'&u='+user_id,
+            function (data) {
+                $('#found').empty();
+                var user_id = '<?php echo $_SESSION['id']; ?>';
+                if(data.trim()!="" && str.trim()!="" && data.trim()!="\"\""){
+                    var found = data.replace('"', '').split(',');
+                    for(var i=0; i < found.length-1; i++){
+                        var extracted = found[i].split(':');
+                        var item = '<div class="proposition" '
+                            +'onclick="addAsExecutive('+extracted[0].trim()+', '+user_id+')" >'
+                            +extracted[1]+': '+extracted[2]+'</div>';
+                        $('#found').append(item);
+                    }
                 }
-            }
-        }
-    );
+        });
     });
     
 </script>

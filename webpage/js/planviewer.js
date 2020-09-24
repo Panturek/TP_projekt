@@ -117,11 +117,12 @@ function makeHtmlExecutiveElements( data, plan_id, user_id=0, append_to= "#tasks
             }
         }
     keys = ordnung;
-    
 
     for (var i = 1; i < keys.length; i++) {
         var id = keys[i];
-        task = tasks[id];
+        var task = tasks[id];
+        if (!task)
+            continue;
         var statesList = arrayToList( defStates, plan_id, user_id, id );
         var elem = '<div class="task ' + classes.join(" ")
             + '" id="' + id + '">'
@@ -178,4 +179,17 @@ function getReviewed(plan_id, user_id) {
         }, "json"
     );
     return 1;
+}
+
+function addAsExecutive(plan_id, user_id) {
+    var request = new Object();
+    request.plan_id = plan_id;
+    request.user_id = user_id;
+    $.post("newexecutive.php",
+        JSON.stringify(request),
+        function (data) {
+            //if (data.status) {
+                console.log(data.status);
+            //}
+        });
 }

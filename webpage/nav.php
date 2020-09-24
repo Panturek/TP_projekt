@@ -28,7 +28,7 @@
                     </li>
                     
                     <li class="nav-item" id = "plany">
-                        <a class="nav-link" href="plans.php"> Plany </a>
+                        <a class="nav-link" href="planviewer.php"> Plany </a>
                     </li>
 
                     <li class="nav-item" id = "noweplany">

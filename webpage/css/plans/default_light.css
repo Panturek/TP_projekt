@@ -247,6 +247,11 @@ textarea.display_type {
     cursor: pointer;
 }
 
+.proposition{
+    cursor: pointer;
+    margin-left: 5%;
+}
+
 #found{
     border-color: 2px solid #aaaaaa;
 }
