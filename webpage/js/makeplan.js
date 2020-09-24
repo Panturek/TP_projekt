@@ -38,7 +38,22 @@ $('#plusik').click(function(){
 
 });
 
+function makeSumbutedView(status){
+    $('.plan_view').text('');
+    var msg = "Wystąpił problem, nie można dodać pliku";
+    if (status = 1)
+        msg = "Dodano pomyślnie";
+    var msgdiv = '<div class="makestatus">' + msg + '</div>';
+    var subnav = '<div class="subnav">'
+        + '<a class="greenbutton item" href="makeplan.php">Następny</a>'
+        + '<a class="greenbutton item" href="planviewer.php">Powrót</a>'
+        + '</div>';
 
+        $('.plan_view').append(msgdiv);
+        $('.plan_view').append(subnav);
+
+    return msgdiv;
+}
 
 $('#submit').click(function(){
     var tasksCount = parseInt($('#plusik').attr('alt'));
@@ -89,8 +104,8 @@ $('#submit').click(function(){
 
     $.post("newplan.php",
         JSON.stringify(request),
-        function(data){
-            console.log(data);
+        function (data) {
+            makeSumbutedView(data.status);
         }
     );
 

@@ -46,7 +46,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
 }
 else{
-    $response = array("status" => 0, "Info" => "Request method not accepted!");
+    $response = array("status" => 0, "Error" => "Request method not accepted!");
 }
 
 // Set Content-type to JSON

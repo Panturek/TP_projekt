@@ -35,6 +35,7 @@ function arrayToList(arr, plan_id, user_id, id) {
 }
 
 function setExecutivesStatus(data) {
+    console.log(data);
     $.each(data, function (key, value) {
         var elem = '#' + key +'.task > .state';
         $(elem).append('<div class="curr">'+data[key]['state']+'</div>');
@@ -164,7 +165,6 @@ function getExecuted(plan_id, user_id) {
             setExecutivesStatus(data);
         }, "json"
     );
-    return 1;
 }
 
 function getReviewed(plan_id, user_id) {

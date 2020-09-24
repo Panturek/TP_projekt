@@ -191,6 +191,10 @@ textarea.display_type {
     display: block;
     cursor: pointer;
     height: 40px;
+    text-decoration: none !important;
+}
+.greenbutton:hover{
+    color: #fffccc;
 }
 
 #plusik{
@@ -254,4 +258,18 @@ textarea.display_type {
 
 #found{
     border-color: 2px solid #aaaaaa;
+}
+
+.makestatus{
+    width: 100%;
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    font-size: 30px;
+    color: #666666;
+}
+
+.subnav > .item{
+    margin-left: 35%;
+    width: 30%;
 }
