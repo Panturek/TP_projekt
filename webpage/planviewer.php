@@ -9,11 +9,11 @@
     
     include_once("config.php");
     $select_reviewed = "select reviewers.plan_id, plans.name
-                        from tpprojekt.reviewers, tpprojekt.plans
+                        from $db_name.reviewers, $db_name.plans
                         where reviewers.plan_id like plans.plan_id
                         and user_id= ".$_SESSION['id'];
     $select_executed = "select executives.plan_id, plans.name
-                        from tpprojekt.executives, tpprojekt.plans
+                        from $db_name.executives, $db_name.plans
                         where executives.plan_id like plans.plan_id
                         and user_id= ".$_SESSION['id'];
 

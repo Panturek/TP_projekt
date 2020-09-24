@@ -2,7 +2,7 @@
 
     include_once('config.php');
     $task = isset($_GET['task']) ? mysqli_real_escape_string($conn, $_GET['task']) :  "";
-    $sql = "SELECT * FROM `tpprojekt`.`rest_tasks` WHERE task='{$task}';";
+    $sql = "SELECT * FROM `$db_name`.`rest_tasks` WHERE task='{$task}';";
     $get_data_query = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 
         if(mysqli_num_rows($get_data_query)!=0){
