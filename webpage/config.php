@@ -1,6 +1,6 @@
 <?php
 
-$config = parse_ini_file('./ini/rest.ini');
+$config = parse_ini_file('ini/rest.ini');
 
 $host = $config['host'];
 $db_user = $config['db_user'];

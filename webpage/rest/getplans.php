@@ -1,5 +1,5 @@
 <?php
-    include_once('config.php');
+    include_once( $_SERVER['DOCUMENT_ROOT'].'/config.php');
 
 if($_SERVER['REQUEST_METHOD'] == "GET"){
     $str = $_GET['q'];

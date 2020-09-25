@@ -13,7 +13,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         echo "plan file format corrupted";
     }
 
-    include_once("config.php");
+    include_once( $_SERVER['DOCUMENT_ROOT'].'/config.php');
     $select_reviewers = "select * from $db_name.reviewers
                         where user_id like ".$user_id.
                         " and plan_id like ".$plan_id;

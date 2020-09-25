@@ -11,7 +11,7 @@ function setNewState(plan_id, user_id, task_id, state ) {
     request.user_id = user_id;
     request.task_id = task_id;
     request.state = state;
-    $.post("setstate.php",
+    $.post("rest/setstate.php",
         JSON.stringify(request),
         function (data) {
 
@@ -46,7 +46,7 @@ function getUserProgress(user_id, plan_id) {
     var request = new Object();
     request.plan_id = plan_id;
     request.user_id = user_id;
-    $.post("plandata.php",
+    $.post("rest/plandata.php",
         JSON.stringify(request),
         function (data) {
             var append_to = '#' + user_id + ".progress > .plan_data";
@@ -55,7 +55,7 @@ function getUserProgress(user_id, plan_id) {
         }, "json"
     );
     
-    $.post("planstate.php",
+    $.post("rest/planstate.php",
         JSON.stringify(request),
         function(data){
             setExecutivesStatus(data);
@@ -152,14 +152,14 @@ function getExecuted(plan_id, user_id) {
     request.plan_id = plan_id;
     request.user_id = user_id;
 
-    $.post("plandata.php",
+    $.post("rest/plandata.php",
         JSON.stringify( request ),
         function (data) {
             makeHtmlExecutiveElements(data, plan_id, user_id);
         }, "json"
     );
     
-    $.post("planstate.php",
+    $.post("rest/planstate.php",
         JSON.stringify( request ),
         function (data) {
             setExecutivesStatus(data);
@@ -172,7 +172,7 @@ function getReviewed(plan_id, user_id) {
     request.plan_id = plan_id;
     request.user_id = user_id;
 
-    $.post("planreview.php",
+    $.post("rest/planreview.php",
         JSON.stringify(request),
         function (data) {
             makeHtmlReviewedElements( data );
@@ -185,7 +185,7 @@ function addAsExecutive(plan_id, user_id) {
     var request = new Object();
     request.plan_id = plan_id;
     request.user_id = user_id;
-    $.post("newexecutive.php",
+    $.post("rest/newexecutive.php",
         JSON.stringify(request),
         function (data) {
             //if (data.status) {

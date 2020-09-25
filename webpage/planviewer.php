@@ -7,7 +7,7 @@
     }
     $_SESSION['pageid'] = 'plany';
     
-    include_once("config.php");
+    include_once( $_SERVER['DOCUMENT_ROOT'].'/config.php');
     $select_reviewed = "select reviewers.plan_id, plans.name
                         from $db_name.reviewers, $db_name.plans
                         where reviewers.plan_id like plans.plan_id
@@ -152,7 +152,7 @@
         var str=$(this).val();
         var user_id = '<?php echo $_SESSION['id']; ?>';
         
-        $.get("getplans.php?q="+str+'&u='+user_id,
+        $.get("rest/getplans.php?q="+str+'&u='+user_id,
             function (data) {
                 $('#found').empty();
                 var user_id = '<?php echo $_SESSION['id']; ?>';

@@ -102,7 +102,7 @@ $('#submit').click(function(){
     request.author= $('#usr').text().trim();
     request.plan = plan;
 
-    $.post("newplan.php",
+    $.post("rest/newplan.php",
         JSON.stringify(request),
         function (data) {
             makeSumbutedView(data.status);
