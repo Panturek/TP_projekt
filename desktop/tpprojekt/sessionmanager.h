@@ -1,16 +1,28 @@
-#ifndef LOGINGSERVICE_H
-#define LOGINGSERVICE_H
+#ifndef SESSIONMANAGER_H
+#define SESSIONMANAGER_H
+#include <qobject.h>
+#include <qstring.h>
+#include <curlpp/cURLpp.hpp>
+#include <curlpp/Easy.hpp>
+#include <curlpp/Options.hpp>
+#include <curlpp/Exception.hpp>
 
-
-class LogingService : public QObject
+class SessionManager : public QObject
 {
     Q_OBJECT
+private:
+    std::string host="http://localhost";
+    curlpp::Easy request;
 public:
-    explicit LogingService(QObject *parent = nullptr);
+    explicit SessionManager(QObject *parent = nullptr, std::string host="http://localhost");
+    ~SessionManager();
+    void establishSession();
 
 signals:
 
 public slots:
+    void registerRequest();
+    void login(const QString, const QString);
 };
 
-#endif // LOGINGSERVICE_H
+#endif // SESSIONMANAGER_H

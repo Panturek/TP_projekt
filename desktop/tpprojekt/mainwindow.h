@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "sessionmanager.h"
 
 namespace Ui {
 class MainWindow;
@@ -15,8 +16,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void loginPanel();
+
 private:
     Ui::MainWindow *ui;
+    SessionManager *sessionManager;
 };
 
 #endif // MAINWINDOW_H

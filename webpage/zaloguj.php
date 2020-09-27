@@ -39,17 +39,14 @@
 
 					$_SESSION['zalogowany']=true;
 					$_SESSION['id']=$wiersz['id'];
-					$_SESSION['user']=$wiersz['user'];
-					$_SESSION['drewno']=$wiersz['drewno'];
-					$_SESSION['kamien']=$wiersz['kamien'];
-					$_SESSION['zboze']=$wiersz['zboze'];
-					$_SESSION['dnipremium']=$wiersz['dnipremium'];
+                    $_SESSION['user']=$wiersz['user'];
+                    echo "id=".$_SESSION['id'].";";
 					unset($_SESSION['blad']);
 					$rezultat->free_result();
 					header('Location: index.php');
 				}
 				else{
-					$_SESSION['blad']='<span style="color: red">Nieprawidłowe hasło</span>';
+                    $_SESSION['blad']='<span style="color: red">Nieprawidłowe hasło</span>';
 					header('Location: loginpanel.php');
 				}
 			}
