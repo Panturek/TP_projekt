@@ -51,10 +51,11 @@ void SessionManager::login( const QString plogin, const QString ppassword){
     catch(...){
         qDebug() << "conn refused";
     }
+    writer.clear();
 }
 
 void SessionManager::registerRequest(){
-    getPlans();
+    getPlans( "ch" );
 }
 
 std::string SessionManager::getLastResponse(){
@@ -63,19 +64,26 @@ std::string SessionManager::getLastResponse(){
     return res;
 }
 
-void SessionManager::getPlans(const std::string user_id ){
+int SessionManager::getUserId() const{
+    return user_id;
+}
+
+QString SessionManager::getPlans(const QString searched ){
     try{
-        auto id = QString::number( getIdFromResponse(user_id) ).toStdString();
-        auto url = host+"/getplans.php?q=ch&u="+id;
+        if( searched == "")
+            return "";
+        auto id = QString::number( user_id ).toStdString();
+        auto url = host+"/getplans.php?q="+searched.toStdString()+"&u="+id;
 
         request.setOpt(new curlpp::options::Url(url.c_str()));
         request.setOpt(new curlpp::options::HttpGet(("q=ch&u="+id).c_str()));
         request.perform();
-
+        return getLastResponse().c_str();
     }
     catch(...){
 
     }
+    return "";
 }
 
 void SessionManager::planData(){
@@ -94,13 +102,27 @@ void SessionManager::planData(){
     }
 }
 
-void SessionManager::newPlan( ){
+void SessionManager::newPlan(const QString plan ){
     try{
         auto url = host+"/newplan.php";
-        std::string postField = "{\"name\":\"nazwa planu\",\"description\":\"krótki opis działania planu \",\"author\":\"1\","
-                                "\"plan\":{\"features\":{\"open\":true,\"states\":[\"a\",\"b\",\"c\",\"d\"],\"display\":\"text\",\"startdate\":false,\"enddate\":false},\"tasks\":{\"t0\":{\"next\":\"t1\"},\"t1\":{\"text\":\"task1\",\"next\":\"t2\"},\"t2\":{\"text\":\"task2\",\"next\":\"t0\"}}}}";
-
-        request.setOpt(new curlpp::options::PostFields(postField.c_str()));
+        std::string postField = plan.toStdString();
+/* {\"name\":\"nazwa planu\",
+ * \"description\":\"krótki opis działania planu \",
+ * \"author\":\"1\",
+ * \"plan\":{
+ * \"features\":{
+ * \"open\":true,
+ * \"states\":[\"a\",\"b\",\"c\",\"d\"],
+ * \"display\":\"text\",
+ * \"startdate\":false,
+ * \"enddate\":false},
+ * \"tasks\":{
+ * \"t0\":{\"next\":\"t1\"},
+ * \"t1\":{\"text\":\"task1\",\"next\":\"t2\"},
+ * \"t2\":{\"text\":\"task2\",\"next\":\"t0\"}
+ * }}}";
+*/
+    request.setOpt(new curlpp::options::PostFields(postField.c_str()));
         request.setOpt(new curlpp::options::PostFieldSize(postField.size()));
         request.setOpt(new curlpp::options::Url(url.c_str()));
 
@@ -151,3 +173,27 @@ void SessionManager::newExecutive(){
     }
 }
 
+void SessionManager::setState(){
+    if(user_id < 1){
+        return;
+    }
+
+    try{
+        auto url = host+"/setstate.php";
+        std::string postField = "{ \"plan_id\":\"102009071956271\", \"user_id\":\"1\", "
+                                " \"task_id\": \"t2\", \"state\": \"Done\" }";
+
+        request.setOpt(new curlpp::options::PostFields(postField.c_str()));
+        request.setOpt(new curlpp::options::PostFieldSize(postField.size()));
+        request.setOpt(new curlpp::options::Url(url.c_str()));
+
+        request.perform();
+    }
+    catch(...){
+
+    }
+}
+
+void SessionManager::planState(){
+
+}

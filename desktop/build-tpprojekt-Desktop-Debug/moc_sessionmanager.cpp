@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_SessionManager_t {
-    QByteArrayData data[13];
-    char stringdata0[133];
+    QByteArrayData data[16];
+    char stringdata0[158];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,18 +37,22 @@ QT_MOC_LITERAL(2, 24, 0), // ""
 QT_MOC_LITERAL(3, 25, 15), // "registerRequest"
 QT_MOC_LITERAL(4, 41, 5), // "login"
 QT_MOC_LITERAL(5, 47, 8), // "getPlans"
-QT_MOC_LITERAL(6, 56, 11), // "std::string"
-QT_MOC_LITERAL(7, 68, 7), // "user_id"
-QT_MOC_LITERAL(8, 76, 8), // "planData"
-QT_MOC_LITERAL(9, 85, 7), // "newPlan"
-QT_MOC_LITERAL(10, 93, 10), // "planReview"
-QT_MOC_LITERAL(11, 104, 12), // "newExecutive"
-QT_MOC_LITERAL(12, 117, 15) // "getLastResponse"
+QT_MOC_LITERAL(6, 56, 8), // "searched"
+QT_MOC_LITERAL(7, 65, 8), // "planData"
+QT_MOC_LITERAL(8, 74, 10), // "planReview"
+QT_MOC_LITERAL(9, 85, 11), // "std::string"
+QT_MOC_LITERAL(10, 97, 9), // "planState"
+QT_MOC_LITERAL(11, 107, 7), // "newPlan"
+QT_MOC_LITERAL(12, 115, 4), // "plan"
+QT_MOC_LITERAL(13, 120, 12), // "newExecutive"
+QT_MOC_LITERAL(14, 133, 8), // "setState"
+QT_MOC_LITERAL(15, 142, 15) // "getLastResponse"
 
     },
     "SessionManager\0loggedIn\0\0registerRequest\0"
-    "login\0getPlans\0std::string\0user_id\0"
-    "planData\0newPlan\0planReview\0newExecutive\0"
+    "login\0getPlans\0searched\0planData\0"
+    "planReview\0std::string\0planState\0"
+    "newPlan\0plan\0newExecutive\0setState\0"
     "getLastResponse"
 };
 #undef QT_MOC_LITERAL
@@ -59,7 +63,7 @@ static const uint qt_meta_data_SessionManager[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -67,18 +71,20 @@ static const uint qt_meta_data_SessionManager[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   64,    2, 0x06 /* Public */,
+       1,    0,   74,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,   65,    2, 0x0a /* Public */,
-       4,    2,   66,    2, 0x0a /* Public */,
-       5,    1,   71,    2, 0x0a /* Public */,
-       5,    0,   74,    2, 0x2a /* Public | MethodCloned */,
-       8,    0,   75,    2, 0x0a /* Public */,
-       9,    0,   76,    2, 0x0a /* Public */,
-      10,    1,   77,    2, 0x0a /* Public */,
-      11,    0,   80,    2, 0x0a /* Public */,
-      12,    0,   81,    2, 0x0a /* Public */,
+       3,    0,   75,    2, 0x0a /* Public */,
+       4,    2,   76,    2, 0x0a /* Public */,
+       5,    1,   81,    2, 0x0a /* Public */,
+       7,    0,   84,    2, 0x0a /* Public */,
+       8,    1,   85,    2, 0x0a /* Public */,
+      10,    0,   88,    2, 0x0a /* Public */,
+      11,    1,   89,    2, 0x0a /* Public */,
+      11,    0,   92,    2, 0x2a /* Public | MethodCloned */,
+      13,    0,   93,    2, 0x0a /* Public */,
+      14,    0,   94,    2, 0x0a /* Public */,
+      15,    0,   95,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -86,13 +92,15 @@ static const uint qt_meta_data_SessionManager[] = {
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    2,    2,
-    QMetaType::Void, 0x80000000 | 6,    7,
+    QMetaType::QString, QMetaType::QString,    6,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 9,    2,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   12,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 6,    2,
-    QMetaType::Void,
-    0x80000000 | 6,
+    0x80000000 | 9,
 
        0        // eod
 };
@@ -106,13 +114,16 @@ void SessionManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 0: _t->loggedIn(); break;
         case 1: _t->registerRequest(); break;
         case 2: _t->login((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 3: _t->getPlans((*reinterpret_cast< const std::string(*)>(_a[1]))); break;
-        case 4: _t->getPlans(); break;
-        case 5: _t->planData(); break;
-        case 6: _t->newPlan(); break;
-        case 7: _t->planReview((*reinterpret_cast< const std::string(*)>(_a[1]))); break;
-        case 8: _t->newExecutive(); break;
-        case 9: { std::string _r = _t->getLastResponse();
+        case 3: { QString _r = _t->getPlans((*reinterpret_cast< const QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+        case 4: _t->planData(); break;
+        case 5: _t->planReview((*reinterpret_cast< const std::string(*)>(_a[1]))); break;
+        case 6: _t->planState(); break;
+        case 7: _t->newPlan((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 8: _t->newPlan(); break;
+        case 9: _t->newExecutive(); break;
+        case 10: _t->setState(); break;
+        case 11: { std::string _r = _t->getLastResponse();
             if (_a[0]) *reinterpret_cast< std::string*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
@@ -153,13 +164,13 @@ int SessionManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 12)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 10;
+        _id -= 12;
     }
     return _id;
 }

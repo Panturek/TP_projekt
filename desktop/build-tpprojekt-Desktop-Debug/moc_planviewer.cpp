@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_PlanViewer_t {
-    QByteArrayData data[9];
-    char stringdata0[76];
+    QByteArrayData data[13];
+    char stringdata0[134];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,16 +34,22 @@ static const qt_meta_stringdata_PlanViewer_t qt_meta_stringdata_PlanViewer = {
 QT_MOC_LITERAL(0, 0, 10), // "PlanViewer"
 QT_MOC_LITERAL(1, 11, 7), // "closing"
 QT_MOC_LITERAL(2, 19, 0), // ""
-QT_MOC_LITERAL(3, 20, 8), // "getPlans"
-QT_MOC_LITERAL(4, 29, 8), // "planData"
-QT_MOC_LITERAL(5, 38, 10), // "planReview"
-QT_MOC_LITERAL(6, 49, 7), // "newPlan"
-QT_MOC_LITERAL(7, 57, 12), // "newExecutive"
-QT_MOC_LITERAL(8, 70, 5) // "close"
+QT_MOC_LITERAL(3, 20, 11), // "showCreator"
+QT_MOC_LITERAL(4, 32, 8), // "getPlans"
+QT_MOC_LITERAL(5, 41, 8), // "planData"
+QT_MOC_LITERAL(6, 50, 10), // "planReview"
+QT_MOC_LITERAL(7, 61, 9), // "planState"
+QT_MOC_LITERAL(8, 71, 12), // "newExecutive"
+QT_MOC_LITERAL(9, 84, 8), // "setState"
+QT_MOC_LITERAL(10, 93, 5), // "close"
+QT_MOC_LITERAL(11, 99, 16), // "switchToExecuted"
+QT_MOC_LITERAL(12, 116, 17) // "switchToInspected"
 
     },
-    "PlanViewer\0closing\0\0getPlans\0planData\0"
-    "planReview\0newPlan\0newExecutive\0close"
+    "PlanViewer\0closing\0\0showCreator\0"
+    "getPlans\0planData\0planReview\0planState\0"
+    "newExecutive\0setState\0close\0"
+    "switchToExecuted\0switchToInspected"
 };
 #undef QT_MOC_LITERAL
 
@@ -53,7 +59,7 @@ static const uint qt_meta_data_PlanViewer[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -61,20 +67,28 @@ static const uint qt_meta_data_PlanViewer[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x06 /* Public */,
+       1,    0,   69,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,   50,    2, 0x0a /* Public */,
-       4,    0,   51,    2, 0x0a /* Public */,
-       5,    0,   52,    2, 0x0a /* Public */,
-       6,    0,   53,    2, 0x0a /* Public */,
-       7,    0,   54,    2, 0x0a /* Public */,
-       8,    0,   55,    2, 0x0a /* Public */,
+       3,    0,   70,    2, 0x0a /* Public */,
+       4,    0,   71,    2, 0x0a /* Public */,
+       5,    0,   72,    2, 0x0a /* Public */,
+       6,    0,   73,    2, 0x0a /* Public */,
+       7,    0,   74,    2, 0x0a /* Public */,
+       8,    0,   75,    2, 0x0a /* Public */,
+       9,    0,   76,    2, 0x0a /* Public */,
+      10,    0,   77,    2, 0x0a /* Public */,
+      11,    0,   78,    2, 0x0a /* Public */,
+      12,    0,   79,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -92,12 +106,16 @@ void PlanViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->closing(); break;
-        case 1: _t->getPlans(); break;
-        case 2: _t->planData(); break;
-        case 3: _t->planReview(); break;
-        case 4: _t->newPlan(); break;
-        case 5: _t->newExecutive(); break;
-        case 6: _t->close(); break;
+        case 1: _t->showCreator(); break;
+        case 2: _t->getPlans(); break;
+        case 3: _t->planData(); break;
+        case 4: _t->planReview(); break;
+        case 5: _t->planState(); break;
+        case 6: _t->newExecutive(); break;
+        case 7: _t->setState(); break;
+        case 8: _t->close(); break;
+        case 9: _t->switchToExecuted(); break;
+        case 10: _t->switchToInspected(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -138,13 +156,13 @@ int PlanViewer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 11)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 11;
     }
     return _id;
 }

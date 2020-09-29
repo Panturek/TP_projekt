@@ -7,7 +7,7 @@
     }
     $_SESSION['pageid'] = 'plany';
     
-    include_once( $_SERVER['DOCUMENT_ROOT'].'/config.php');
+    include_once( 'config.php');
     $select_reviewed = "select reviewers.plan_id, plans.name
                         from $db_name.reviewers, $db_name.plans
                         where reviewers.plan_id like plans.plan_id

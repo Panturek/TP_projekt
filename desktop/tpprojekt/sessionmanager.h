@@ -22,17 +22,20 @@ public:
     explicit SessionManager(QObject *parent = nullptr, std::string host="http://localhost");
     ~SessionManager();
 
+    int getUserId() const;
 signals:
     void loggedIn();
 
 public slots:
     void registerRequest();
     void login(const QString, const QString);
-    void getPlans( const std::string user_id = "id=0;" );
+    QString getPlans(const QString searched );
     void planData();
-    void newPlan();
     void planReview( const std::string );
+    void planState();
+    void newPlan( const QString plan = "" );
     void newExecutive();
+    void setState();
     std::string getLastResponse();
 };
 

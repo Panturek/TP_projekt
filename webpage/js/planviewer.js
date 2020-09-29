@@ -39,10 +39,18 @@ function setExecutivesStatus(data, user_id) {
     $.each(data, function (key, value) {
         var progress = '#'+user_id+'.progress'
         var elem = '#' + key + '.task > .state';
-        if( $(progress + ' > .plan_data > ' + elem+' > .curr').length > 0 )
-            $(elem+' > .curr').text( data[key]['state'] );
-        else 
-            $(progress + ' > .plan_data > ' + elem).append('<div class="curr">' + data[key]['state'] + '</div>');
+        if ( ! $(elem).parent().hasClass('view')) {
+            if ($(elem + ' > .curr').length > 0)
+                $(elem + ' > .curr').text(data[key]['state']);
+            else
+                $(elem).append('<div class="curr">' + data[key]['state'] + '</div>');
+        }
+        else {
+            if ($(progress + ' > .plan_data > ' + elem + ' > .curr').length > 0)
+                $(progress + ' > .plan_data > ' + elem + ' > .curr').text(data[key]['state']);
+            else
+                $(progress + ' > .plan_data > ' + elem).append('<div class="curr">' + data[key]['state'] + '</div>');
+        }
     });
 }
 

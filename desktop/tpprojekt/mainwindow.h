@@ -22,9 +22,10 @@ public slots:
     void showViewer();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow* ui;
     PlanViewer* viewer;
-    SessionManager *sessionManager;
+    PlanCreator* creator;
+    SessionManager* sessionManager;
 };
 
 #endif // MAINWINDOW_H

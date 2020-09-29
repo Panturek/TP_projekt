@@ -54,17 +54,29 @@ SOURCES       = ../tpprojekt/main.cpp \
 		../tpprojekt/mainwindow.cpp \
 		../tpprojekt/sessionmanager.cpp \
 		../tpprojekt/writememory.cpp \
-		../tpprojekt/planviewer.cpp moc_mainwindow.cpp \
+		../tpprojekt/planviewer.cpp \
+		../tpprojekt/plancreator.cpp \
+		../tpprojekt/creatortaskwidget.cpp \
+		../tpprojekt/searchbox.cpp moc_mainwindow.cpp \
 		moc_sessionmanager.cpp \
-		moc_planviewer.cpp
+		moc_planviewer.cpp \
+		moc_plancreator.cpp \
+		moc_creatortaskwidget.cpp \
+		moc_searchbox.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		sessionmanager.o \
 		writememory.o \
 		planviewer.o \
+		plancreator.o \
+		creatortaskwidget.o \
+		searchbox.o \
 		moc_mainwindow.o \
 		moc_sessionmanager.o \
-		moc_planviewer.o
+		moc_planviewer.o \
+		moc_plancreator.o \
+		moc_creatortaskwidget.o \
+		moc_searchbox.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -142,11 +154,17 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../tpprojekt/tpprojekt.pro ../tpprojekt/mainwindow.h \
 		../tpprojekt/sessionmanager.h \
 		../tpprojekt/writememory.h \
-		../tpprojekt/planviewer.h ../tpprojekt/main.cpp \
+		../tpprojekt/planviewer.h \
+		../tpprojekt/plancreator.h \
+		../tpprojekt/creatortaskwidget.h \
+		../tpprojekt/searchbox.h ../tpprojekt/main.cpp \
 		../tpprojekt/mainwindow.cpp \
 		../tpprojekt/sessionmanager.cpp \
 		../tpprojekt/writememory.cpp \
-		../tpprojekt/planviewer.cpp
+		../tpprojekt/planviewer.cpp \
+		../tpprojekt/plancreator.cpp \
+		../tpprojekt/creatortaskwidget.cpp \
+		../tpprojekt/searchbox.cpp
 QMAKE_TARGET  = tpprojekt
 DESTDIR       = 
 TARGET        = tpprojekt
@@ -155,7 +173,7 @@ TARGET        = tpprojekt
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_planviewer.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_planviewer.h ui_plancreator.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../tpprojekt/tpprojekt.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -330,9 +348,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../tpprojekt/mainwindow.h ../tpprojekt/sessionmanager.h ../tpprojekt/writememory.h ../tpprojekt/planviewer.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../tpprojekt/main.cpp ../tpprojekt/mainwindow.cpp ../tpprojekt/sessionmanager.cpp ../tpprojekt/writememory.cpp ../tpprojekt/planviewer.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../tpprojekt/mainwindow.ui ../tpprojekt/planviewer.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../tpprojekt/mainwindow.h ../tpprojekt/sessionmanager.h ../tpprojekt/writememory.h ../tpprojekt/planviewer.h ../tpprojekt/plancreator.h ../tpprojekt/creatortaskwidget.h ../tpprojekt/searchbox.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../tpprojekt/main.cpp ../tpprojekt/mainwindow.cpp ../tpprojekt/sessionmanager.cpp ../tpprojekt/writememory.cpp ../tpprojekt/planviewer.cpp ../tpprojekt/plancreator.cpp ../tpprojekt/creatortaskwidget.cpp ../tpprojekt/searchbox.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../tpprojekt/mainwindow.ui ../tpprojekt/planviewer.ui ../tpprojekt/plancreator.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -364,11 +382,13 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_sessionmanager.cpp moc_planviewer.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_sessionmanager.cpp moc_planviewer.cpp moc_plancreator.cpp moc_creatortaskwidget.cpp moc_searchbox.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_sessionmanager.cpp moc_planviewer.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_sessionmanager.cpp moc_planviewer.cpp moc_plancreator.cpp moc_creatortaskwidget.cpp moc_searchbox.cpp
 moc_mainwindow.cpp: ../tpprojekt/sessionmanager.h \
 		../tpprojekt/writememory.h \
+		../tpprojekt/planviewer.h \
+		../tpprojekt/plancreator.h \
 		../tpprojekt/mainwindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -380,16 +400,38 @@ moc_sessionmanager.cpp: ../tpprojekt/writememory.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/panturek/studia/tp/projekt/desktop/tpprojekt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../tpprojekt/sessionmanager.h -o moc_sessionmanager.cpp
 
-moc_planviewer.cpp: ../tpprojekt/planviewer.h \
+moc_planviewer.cpp: ../tpprojekt/sessionmanager.h \
+		../tpprojekt/writememory.h \
+		../tpprojekt/plancreator.h \
+		../tpprojekt/planviewer.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/panturek/studia/tp/projekt/desktop/tpprojekt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../tpprojekt/planviewer.h -o moc_planviewer.cpp
 
+moc_plancreator.cpp: ../tpprojekt/sessionmanager.h \
+		../tpprojekt/writememory.h \
+		../tpprojekt/plancreator.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/panturek/studia/tp/projekt/desktop/tpprojekt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../tpprojekt/plancreator.h -o moc_plancreator.cpp
+
+moc_creatortaskwidget.cpp: ../tpprojekt/creatortaskwidget.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/panturek/studia/tp/projekt/desktop/tpprojekt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../tpprojekt/creatortaskwidget.h -o moc_creatortaskwidget.cpp
+
+moc_searchbox.cpp: ../tpprojekt/sessionmanager.h \
+		../tpprojekt/writememory.h \
+		../tpprojekt/searchbox.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/panturek/studia/tp/projekt/desktop/tpprojekt -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../tpprojekt/searchbox.h -o moc_searchbox.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_planviewer.h
+compiler_uic_make_all: ui_mainwindow.h ui_planviewer.h ui_plancreator.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_planviewer.h
+	-$(DEL_FILE) ui_mainwindow.h ui_planviewer.h ui_plancreator.h
 ui_mainwindow.h: ../tpprojekt/mainwindow.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../tpprojekt/mainwindow.ui -o ui_mainwindow.h
@@ -397,6 +439,10 @@ ui_mainwindow.h: ../tpprojekt/mainwindow.ui \
 ui_planviewer.h: ../tpprojekt/planviewer.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../tpprojekt/planviewer.ui -o ui_planviewer.h
+
+ui_plancreator.h: ../tpprojekt/plancreator.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic ../tpprojekt/plancreator.ui -o ui_plancreator.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -410,12 +456,16 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 main.o: ../tpprojekt/main.cpp ../tpprojekt/mainwindow.h \
 		../tpprojekt/sessionmanager.h \
-		../tpprojekt/writememory.h
+		../tpprojekt/writememory.h \
+		../tpprojekt/planviewer.h \
+		../tpprojekt/plancreator.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../tpprojekt/main.cpp
 
 mainwindow.o: ../tpprojekt/mainwindow.cpp ../tpprojekt/mainwindow.h \
 		../tpprojekt/sessionmanager.h \
 		../tpprojekt/writememory.h \
+		../tpprojekt/planviewer.h \
+		../tpprojekt/plancreator.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../tpprojekt/mainwindow.cpp
 
@@ -427,8 +477,27 @@ writememory.o: ../tpprojekt/writememory.cpp ../tpprojekt/writememory.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o writememory.o ../tpprojekt/writememory.cpp
 
 planviewer.o: ../tpprojekt/planviewer.cpp ../tpprojekt/planviewer.h \
-		ui_planviewer.h
+		../tpprojekt/sessionmanager.h \
+		../tpprojekt/writememory.h \
+		../tpprojekt/plancreator.h \
+		ui_planviewer.h \
+		../tpprojekt/searchbox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o planviewer.o ../tpprojekt/planviewer.cpp
+
+plancreator.o: ../tpprojekt/plancreator.cpp ../tpprojekt/plancreator.h \
+		../tpprojekt/sessionmanager.h \
+		../tpprojekt/writememory.h \
+		ui_plancreator.h \
+		../tpprojekt/creatortaskwidget.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o plancreator.o ../tpprojekt/plancreator.cpp
+
+creatortaskwidget.o: ../tpprojekt/creatortaskwidget.cpp ../tpprojekt/creatortaskwidget.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o creatortaskwidget.o ../tpprojekt/creatortaskwidget.cpp
+
+searchbox.o: ../tpprojekt/searchbox.cpp ../tpprojekt/searchbox.h \
+		../tpprojekt/sessionmanager.h \
+		../tpprojekt/writememory.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o searchbox.o ../tpprojekt/searchbox.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -438,6 +507,15 @@ moc_sessionmanager.o: moc_sessionmanager.cpp
 
 moc_planviewer.o: moc_planviewer.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_planviewer.o moc_planviewer.cpp
+
+moc_plancreator.o: moc_plancreator.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_plancreator.o moc_plancreator.cpp
+
+moc_creatortaskwidget.o: moc_creatortaskwidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_creatortaskwidget.o moc_creatortaskwidget.cpp
+
+moc_searchbox.o: moc_searchbox.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_searchbox.o moc_searchbox.cpp
 
 ####### Install
 

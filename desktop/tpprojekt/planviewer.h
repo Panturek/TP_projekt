@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "sessionmanager.h"
+#include "plancreator.h"
 
 namespace Ui {
 class PlanViewer;
@@ -20,13 +21,16 @@ signals:
     void closing();
 
 public slots:
+    void showCreator();
     void getPlans();
     void planData();
     void planReview();
-    void newPlan();
+    void planState();
     void newExecutive();
-
+    void setState();
     void close();
+    void switchToExecuted();
+    void switchToInspected();
 
 private:
     Ui::PlanViewer *ui;

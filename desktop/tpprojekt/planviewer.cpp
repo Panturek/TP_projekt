@@ -1,5 +1,6 @@
 #include "planviewer.h"
 #include "ui_planviewer.h"
+#include "searchbox.h"
 
 PlanViewer::PlanViewer(QWidget *parent, SessionManager* sm) :
     QWidget(parent),
@@ -20,16 +21,23 @@ void PlanViewer::close(){
 }
 
 void PlanViewer::init(){
+    ui->searcherLayout->addWidget( new SearchBox(this, sessionManager) );
+    connect(ui->makeNewButton, SIGNAL(clicked()),
+            this, SLOT( showCreator() ) );
     connect(ui->getPlansButton, SIGNAL(clicked()),
             this, SLOT( getPlans() ) );
     connect(ui->planDataButton, SIGNAL(clicked()),
             this, SLOT( planData() ) );
     connect(ui->planReviewButton, SIGNAL(clicked()),
             this, SLOT( planReview() ) );
-    connect(ui->newPlanButton, SIGNAL(clicked()),
-            this, SLOT( newPlan() ) );
     connect(ui->newExecutiveButton, SIGNAL(clicked()),
             this, SLOT( newExecutive() ) );
+    connect(ui->setStateButton, SIGNAL(clicked()),
+            this, SLOT( setState() ) );
+    connect(ui->executedButton, SIGNAL(clicked()),
+            this, SLOT(switchToExecuted()));
+    connect(ui->inspectedButton, SIGNAL(clicked()),
+            this, SLOT(switchToInspected()));
 }
 
 void PlanViewer::showResponse(){
@@ -39,8 +47,13 @@ void PlanViewer::showResponse(){
     }
 }
 
+void PlanViewer::showCreator(){
+    auto creator = new PlanCreator( 0, sessionManager);
+    creator->exec();
+}
+
 void PlanViewer::getPlans(){
-    sessionManager->getPlans( );
+    sessionManager->getPlans( "ch" );
     showResponse();
 }
 
@@ -54,14 +67,30 @@ void PlanViewer::planReview(){
     showResponse();
 }
 
-void PlanViewer::newPlan(){
-    sessionManager->newPlan();
-    showResponse();
-}
-
 void PlanViewer::newExecutive(){
     sessionManager->newExecutive();
     showResponse();
 }
+
+void PlanViewer::setState(){
+    sessionManager->setState();
+    showResponse();
+}
+
+void PlanViewer::planState(){
+    sessionManager->planState();
+    showResponse();
+}
+
+void PlanViewer::switchToExecuted(){
+    ui->executedButton->setChecked(true);
+    ui->inspectedButton->setChecked(false);
+}
+
+void PlanViewer::switchToInspected(){
+    ui->inspectedButton->setChecked(true);
+    ui->executedButton->setChecked(false);
+}
+
 
 
