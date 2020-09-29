@@ -28,14 +28,17 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     sessionmanager.cpp \
-    writememory.cpp
+    writememory.cpp \
+    planviewer.cpp
 
 HEADERS += \
         mainwindow.h \
     sessionmanager.h \
-    writememory.h
+    writememory.h \
+    planviewer.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    planviewer.ui
 
 LIBS += -lcurl -lcurlpp

@@ -60,6 +60,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         $result = mysqli_query($conn, $insert_executive);
         if($result){
             $response = array("status" => 1, "msg" => "Plan has been added successfully!");
+            $response = makeStateFile($plan_id, $user_id);
         }
         else{
             $response = array("status" => 0, "msg" => "Error adding a Plan!");

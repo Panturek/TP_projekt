@@ -47,11 +47,13 @@
 				}
 				else{
                     $_SESSION['blad']='<span style="color: red">Nieprawidłowe hasło</span>';
+                    echo "id=x;";
 					header('Location: loginpanel.php');
 				}
 			}
 			else{
 				$_SESSION['blad']='<span style="color: red">Nieprawidłowy login lub hasło</span>';
+                echo "id=x;";
 				header('Location: loginpanel.php');
 			}
 

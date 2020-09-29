@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "sessionmanager.h"
+#include "planviewer.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,9 +19,11 @@ public:
 
 public slots:
     void loginPanel();
+    void showViewer();
 
 private:
     Ui::MainWindow *ui;
+    PlanViewer* viewer;
     SessionManager *sessionManager;
 };
 

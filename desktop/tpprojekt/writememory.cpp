@@ -26,13 +26,19 @@ void* WriterMemory::Realloc(void* ptr, size_t size){
 size_t WriterMemory::WriteMemoryCallback(char* ptr, size_t size, size_t nmemb){
     size_t realsize = size * nmemb;
 
-    m_pBuffer = (char*) Realloc(m_pBuffer, m_Size + realsize);
+    m_pBuffer = (char*) Realloc(m_pBuffer, m_Size + realsize + 1);
     if (m_pBuffer == NULL) {
         realsize = 0;
     }
     memcpy(&(m_pBuffer[m_Size]), ptr, realsize);
     m_Size += realsize;
     return realsize;
+}
+
+void WriterMemory::clear(){
+    m_pBuffer=NULL;
+    this->m_pBuffer =  (char*) Realloc(m_pBuffer, 1);
+    this->m_Size = 0;
 }
 
 void WriterMemory::print(){

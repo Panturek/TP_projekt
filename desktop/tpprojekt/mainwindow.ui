@@ -75,6 +75,9 @@
       <height>26</height>
      </rect>
     </property>
+    <property name="text">
+     <string>adam</string>
+    </property>
    </widget>
    <widget class="QLineEdit" name="passwordEdit">
     <property name="geometry">
@@ -84,6 +87,9 @@
       <width>231</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>qwerty123</string>
     </property>
     <property name="echoMode">
      <enum>QLineEdit::Password</enum>

@@ -11,7 +11,7 @@ function setNewState(plan_id, user_id, task_id, state ) {
     request.user_id = user_id;
     request.task_id = task_id;
     request.state = state;
-    $.post("rest/setstate.php",
+    $.post("setstate.php",
         JSON.stringify(request),
         function (data) {
 
@@ -34,11 +34,15 @@ function arrayToList(arr, plan_id, user_id, id) {
     return list;
 }
 
-function setExecutivesStatus(data) {
+function setExecutivesStatus(data, user_id) {
     console.log(data);
     $.each(data, function (key, value) {
-        var elem = '#' + key +'.task > .state';
-        $(elem).append('<div class="curr">'+data[key]['state']+'</div>');
+        var progress = '#'+user_id+'.progress'
+        var elem = '#' + key + '.task > .state';
+        if( $(progress + ' > .plan_data > ' + elem+' > .curr').length > 0 )
+            $(elem+' > .curr').text( data[key]['state'] );
+        else 
+            $(progress + ' > .plan_data > ' + elem).append('<div class="curr">' + data[key]['state'] + '</div>');
     });
 }
 
@@ -46,7 +50,7 @@ function getUserProgress(user_id, plan_id) {
     var request = new Object();
     request.plan_id = plan_id;
     request.user_id = user_id;
-    $.post("rest/plandata.php",
+    $.post("plandata.php",
         JSON.stringify(request),
         function (data) {
             var append_to = '#' + user_id + ".progress > .plan_data";
@@ -55,10 +59,10 @@ function getUserProgress(user_id, plan_id) {
         }, "json"
     );
     
-    $.post("rest/planstate.php",
+    $.post("planstate.php",
         JSON.stringify(request),
         function(data){
-            setExecutivesStatus(data);
+            setExecutivesStatus(data, user_id);
         },"json"
     );
 }
@@ -152,14 +156,14 @@ function getExecuted(plan_id, user_id) {
     request.plan_id = plan_id;
     request.user_id = user_id;
 
-    $.post("rest/plandata.php",
+    $.post("plandata.php",
         JSON.stringify( request ),
         function (data) {
             makeHtmlExecutiveElements(data, plan_id, user_id);
         }, "json"
     );
     
-    $.post("rest/planstate.php",
+    $.post("planstate.php",
         JSON.stringify( request ),
         function (data) {
             setExecutivesStatus(data);
@@ -172,7 +176,7 @@ function getReviewed(plan_id, user_id) {
     request.plan_id = plan_id;
     request.user_id = user_id;
 
-    $.post("rest/planreview.php",
+    $.post("planreview.php",
         JSON.stringify(request),
         function (data) {
             makeHtmlReviewedElements( data );
@@ -185,7 +189,7 @@ function addAsExecutive(plan_id, user_id) {
     var request = new Object();
     request.plan_id = plan_id;
     request.user_id = user_id;
-    $.post("rest/newexecutive.php",
+    $.post("newexecutive.php",
         JSON.stringify(request),
         function (data) {
             //if (data.status) {
@@ -193,3 +197,4 @@ function addAsExecutive(plan_id, user_id) {
             //}
         });
 }
+

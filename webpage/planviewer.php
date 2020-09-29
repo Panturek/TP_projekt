@@ -152,7 +152,7 @@
         var str=$(this).val();
         var user_id = '<?php echo $_SESSION['id']; ?>';
         
-        $.get("rest/getplans.php?q="+str+'&u='+user_id,
+        $.get("getplans.php?q="+str+'&u='+user_id,
             function (data) {
                 $('#found').empty();
                 var user_id = '<?php echo $_SESSION['id']; ?>';
