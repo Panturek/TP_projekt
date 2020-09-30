@@ -32,14 +32,6 @@ void PlanViewer::init(){
 
     connect(ui->makeNewButton, SIGNAL(clicked()),
             this, SLOT( showCreator() ) );
-    connect(ui->getPlansButton, SIGNAL(clicked()),
-            this, SLOT( getPlans() ) );
-    connect(ui->planDataButton, SIGNAL(clicked()),
-            this, SLOT( planData() ) );
-    connect(ui->planReviewButton, SIGNAL(clicked()),
-            this, SLOT( planReview() ) );
-    connect(ui->setStateButton, SIGNAL(clicked()),
-            this, SLOT( setState() ) );
     connect(ui->executedButton, SIGNAL(clicked()),
             this, SLOT(switchToExecuted()));
     connect(ui->inspectedButton, SIGNAL(clicked()),
@@ -89,12 +81,6 @@ void PlanViewer::fillTaskList(){
 //    ui->taskList->addWidget(new ReviewedTasks(this, "OUT", sessionManager));
 }
 
-void PlanViewer::showResponse(){
-    if( sessionManager ){
-        ui->textViewer->setText(
-                    QString::fromStdString( sessionManager->getLastResponse() ));
-    }
-}
 
 void PlanViewer::showCreator(){
     auto creator = new PlanCreator( 0, sessionManager);
@@ -157,7 +143,13 @@ void PlanViewer::viewPlanAsReviewed(QString planId){
 }
 
 void PlanViewer::viewPlanAsExecuted(QString planId){
-    //ui->taskList->addWidget(new ExecutiveTasksWidget(this, "TRY", "OUT"));
+    clearTaskList();
+    auto usrId = sessionManager->getUserId();
+    auto usrName = "";
+    ui->taskList->addWidget(
+                new ReviewedTasks(this, planId,
+                                  usrId, usrName,
+                                  sessionManager));
 }
 
 

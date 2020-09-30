@@ -3,7 +3,7 @@
 #include <QWidget>
 #include "sessionmanager.h"
 #include <qgridlayout.h>
-#include <vector>
+#include <map>
 
 class ReviewedTasks : public QWidget
 {
@@ -23,6 +23,12 @@ public:
                   int user_id=0, QString user_name="",
                   SessionManager* sm=nullptr );
     void fill();
+    QStringList getAvailableStates( QString planData );
+    QString stateDisplay(QString planData);
+    std::map<QString, QString> mapStates(QString planStates);
+    std::map<QString, QString> mapTexts(QString planData);
+public slots:
+    QStringList getTasks(QString planData);
 };
 
 #endif // REVIEWEDTASKS_H

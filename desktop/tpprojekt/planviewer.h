@@ -22,7 +22,6 @@ class PlanViewer : public QWidget
 public:
     explicit PlanViewer(QWidget *parent = 0, SessionManager* sm = 0);
     ~PlanViewer();
-    void showResponse();
 
     void clearTaskList();
 signals:

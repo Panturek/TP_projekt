@@ -144,6 +144,7 @@ void SuggestCompletion::doneCompletion()
     sessionManager->newExecutive( newExecId );
     editor->setText(item->text(0));
 
+/*
     QMessageBox msgBox;
     msgBox.setWindowTitle("Dodawanie wykonawcy planu");
     msgBox.setInformativeText("Do you want to save your changes?");
@@ -154,7 +155,7 @@ void SuggestCompletion::doneCompletion()
     else
         msgBox.setInformativeText("Nie udało się wykonać operacji");
     msgBox.exec();
-    QMetaObject::invokeMethod(editor, "returnPressed");
+*/    QMetaObject::invokeMethod(editor, "returnPressed");
 
     emit executiveAdded();
 }
