@@ -17,8 +17,10 @@ class PlanCreator : public QDialog
 public:
     explicit PlanCreator(QWidget *parent = 0, SessionManager* sm = 0);
     ~PlanCreator();
-
     void clear();
+
+signals:
+    void closing();
 public slots:
     void hideStatesEdit(int);
     void addNewTask();

@@ -191,8 +191,10 @@ SearchBox::SearchBox(QWidget *parent, SessionManager* sm): QLineEdit(parent)
     completer = new SuggestCompletion(this, sm);
 
     connect(this, SIGNAL(returnPressed()),this, SLOT(doSearch()));
+    connect(completer, SIGNAL(executiveAdded()),this, SIGNAL(executiveAdded()));
 
-    setWindowTitle("Search with Google");
+    setWindowTitle("Search");
+    setPlaceholderText("Szukaj");
 
     adjustSize();
     resize(400, height());

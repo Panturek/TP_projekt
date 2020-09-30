@@ -34,6 +34,8 @@ class SearchBox: public QLineEdit
 
 public:
     SearchBox(QWidget *parent = 0, SessionManager* sm = 0);
+signals:
+    void executiveAdded();
 
 protected slots:
     void doSearch();

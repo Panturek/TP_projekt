@@ -121,5 +121,7 @@ void PlanCreator::submit(){
     sessionManager->newPlan(json);
     qDebug() << sessionManager->getLastResponse().c_str();
 
+    emit closing();
+
 }
 

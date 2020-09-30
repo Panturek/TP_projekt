@@ -44,6 +44,7 @@ void SessionManager::login( const QString plogin, const QString ppassword){
 
         request.perform();
         user_id = getIdFromResponse(writer.getContent());
+        writer.clear();
         if(user_id > 0){
             emit loggedIn();
         }
@@ -86,20 +87,22 @@ QString SessionManager::getPlans(const QString searched ){
     return "";
 }
 
-void SessionManager::planData(){
+QString SessionManager::planData( const QString planId){
     try{
         auto url = host+"/plandata.php";
-        std::string postField = "{ \"plan_id\":\"12009232331491\" }";
+        std::string postField = "{ \"plan_id\":\""+planId.toStdString()+"\" }";
 
         request.setOpt(new curlpp::options::PostFields(postField.c_str()));
         request.setOpt(new curlpp::options::PostFieldSize(postField.size()));
         request.setOpt(new curlpp::options::Url(url.c_str()));
 
         request.perform();
+        return getLastResponse().c_str();
     }
     catch(...){
 
     }
+    return "";
 }
 
 void SessionManager::newPlan(const QString plan ){
@@ -133,9 +136,32 @@ void SessionManager::newPlan(const QString plan ){
     }
 }
 
-void SessionManager::planReview(const std::string plan_id){
+QString SessionManager::myPlans(){
     if(user_id < 1){
-        return;
+        return "" ;
+    }
+
+    try{
+        auto url = host+"/myplans.php";
+        auto userId = QString::number(user_id).toStdString();
+        std::string postField = userId;
+
+        request.setOpt(new curlpp::options::PostFields(postField.c_str()));
+        request.setOpt(new curlpp::options::PostFieldSize(postField.size()));
+        request.setOpt(new curlpp::options::Url(url.c_str()));
+
+        request.perform();
+
+        return QString::fromStdString(getLastResponse());
+    }
+    catch(...){
+
+    }
+}
+
+QString SessionManager::planReview(const std::string plan_id){
+    if(user_id < 1){
+        return "";
     }
 
     try{
@@ -148,10 +174,12 @@ void SessionManager::planReview(const std::string plan_id){
         request.setOpt(new curlpp::options::Url(url.c_str()));
 
         request.perform();
+        return getLastResponse().c_str();
     }
     catch(...){
 
     }
+    return "";
 }
 
 void SessionManager::newExecutive(const QString plan_id){
@@ -176,7 +204,10 @@ void SessionManager::newExecutive(const QString plan_id){
     }
 }
 
-void SessionManager::setState(){
+void SessionManager::setState(const QString planId,
+                              const int userId,
+                              const QString taskId,
+                              const QString state){
     if(user_id < 1){
         return;
     }
@@ -197,6 +228,24 @@ void SessionManager::setState(){
     }
 }
 
-void SessionManager::planState(){
+QString SessionManager::planState(const QString planId, const int userId){
+    if(user_id < 1){
+            return "";
+        }
 
+        try{
+            auto url = host+"/setstate.php";
+            std::string postField = "{ \"plan_id\":\"102009071956271\", \"user_id\":\"1\", "
+                                    " \"task_id\": \"t2\", \"state\": \"Done\" }";
+
+            request.setOpt(new curlpp::options::PostFields(postField.c_str()));
+            request.setOpt(new curlpp::options::PostFieldSize(postField.size()));
+            request.setOpt(new curlpp::options::Url(url.c_str()));
+
+            request.perform();
+            return getLastResponse().c_str();
+        }
+        catch(...){
+
+        }
 }

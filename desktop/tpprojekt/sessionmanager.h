@@ -30,12 +30,13 @@ public slots:
     void registerRequest();
     void login(const QString, const QString);
     QString getPlans(const QString searched );
-    void planData();
-    void planReview( const std::string );
-    void planState();
+    QString myPlans();
+    QString planData(const QString planId );
+    QString planReview( const std::string plan_id );
+    QString planState(const QString planId, const int userId);
     void newPlan( const QString plan = "" );
-    void newExecutive(const QString plan_id );
-    void setState();
+    void newExecutive(const QString plan_id);
+    void setState(const QString planId, const int userId, const QString taskId, const QString state);
     std::string getLastResponse();
 };
 

@@ -32,7 +32,10 @@ SOURCES += \
     planviewer.cpp \
     plancreator.cpp \
     creatortaskwidget.cpp \
-    searchbox.cpp
+    searchbox.cpp \
+    viewerplanwidget.cpp \
+    reviewedtasks.cpp \
+    executedtasks.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +44,10 @@ HEADERS += \
     planviewer.h \
     plancreator.h \
     creatortaskwidget.h \
-    searchbox.h
+    searchbox.h \
+    viewerplanwidget.h \
+    reviewedtasks.h \
+    executedtasks.h
 
 FORMS += \
         mainwindow.ui \

@@ -5,9 +5,16 @@
 #include "sessionmanager.h"
 #include "plancreator.h"
 
+class SearchBox;
+
 namespace Ui {
 class PlanViewer;
 }
+
+enum ViewMode {
+    Reviewed,
+    Executed
+};
 
 class PlanViewer : public QWidget
 {
@@ -17,25 +24,26 @@ public:
     ~PlanViewer();
     void showResponse();
 
+    void clearTaskList();
 signals:
     void closing();
 
 public slots:
     void showCreator();
-    void getPlans();
-    void planData();
-    void planReview();
-    void planState();
-    void setState();
     void close();
     void switchToExecuted();
     void switchToInspected();
+    void showPlanData();
 
-    void fillPlansList(QVBoxLayout *plansList);
+    void fillPlansList(ViewMode vm=Reviewed);
+    void fillTaskList();
 private:
     Ui::PlanViewer *ui;
     SessionManager* sessionManager;
+    SearchBox* searchBox;
     void init();
+    void viewPlanAsReviewed(QString planId);
+    void viewPlanAsExecuted(QString planId);
 };
 
 #endif // PLANVIEWER_H
