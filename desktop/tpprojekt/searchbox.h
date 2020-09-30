@@ -14,8 +14,9 @@ public:
     SuggestCompletion(QLineEdit *parent = 0, SessionManager* sm = 0);
     ~SuggestCompletion();
     bool eventFilter(QObject *obj, QEvent *ev);
-    void showCompletion(const QStringList &choices, const QStringList &hits);
-
+    void showCompletion(const QStringList &ids, const QStringList &choices, const QStringList &hits);
+signals:
+    void executiveAdded();
 public slots:
     void doneCompletion();
     void autoSuggest();

@@ -26,12 +26,12 @@ public slots:
     void planData();
     void planReview();
     void planState();
-    void newExecutive();
     void setState();
     void close();
     void switchToExecuted();
     void switchToInspected();
 
+    void fillPlansList(QVBoxLayout *plansList);
 private:
     Ui::PlanViewer *ui;
     SessionManager* sessionManager;

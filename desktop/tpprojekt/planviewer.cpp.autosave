@@ -41,7 +41,8 @@ void PlanViewer::init(){
 }
 
 void PlanViewer::fillPlansList( ){
-    sessionManager->getPlans();
+    std::string sessionManager->getPlans();
+    
     ui->plansList
 }
 

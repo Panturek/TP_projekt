@@ -2,8 +2,19 @@
 #include <qtreewidget.h>
 #include <qevent.h>
 #include <qheaderview.h>
+#include <qmessagebox.h>
 
 #include <qdebug.h>
+
+class SearchResultItem :public QTreeWidgetItem{
+private:
+    QString m_planId;
+public:
+    SearchResultItem(QTreeWidget* parent, QString planId)
+        : QTreeWidgetItem( parent )
+        , m_planId(planId){}
+    QString getPlanId()const{ return m_planId; }
+};
 
 SuggestCompletion::SuggestCompletion(QLineEdit *parent, SessionManager* sm): QObject(parent), editor(parent)
   ,sessionManager(sm)
@@ -87,7 +98,7 @@ bool SuggestCompletion::eventFilter(QObject *obj, QEvent *ev)
     return false;
 }
 
-void SuggestCompletion::showCompletion(const QStringList &choices, const QStringList &hits)
+void SuggestCompletion::showCompletion(const QStringList& ids, const QStringList &choices, const QStringList &hits)
 {
     if (choices.isEmpty() || choices.count() != hits.count())
         return;
@@ -98,8 +109,8 @@ void SuggestCompletion::showCompletion(const QStringList &choices, const QString
     popup->setUpdatesEnabled(false);
     popup->clear();
     for (int i = 0; i < choices.count(); ++i) {
-        QTreeWidgetItem * item;
-        item = new QTreeWidgetItem(popup);
+        SearchResultItem * item;
+        item = new SearchResultItem(popup, ids[i]);
         item->setText(0, choices[i]);
         item->setText(1, hits[i]);
         item->setTextAlignment(1, Qt::AlignRight);
@@ -124,10 +135,28 @@ void SuggestCompletion::doneCompletion()
     popup->hide();
     editor->setFocus();
     QTreeWidgetItem *item = popup->currentItem();
-    if (item) {
-        editor->setText(item->text(0));
-        QMetaObject::invokeMethod(editor, "returnPressed");
-    }
+    if(!item)
+        return;
+    auto searchResult = dynamic_cast<SearchResultItem*>(item);
+    if( !searchResult )
+        return;
+    auto newExecId = searchResult->getPlanId();
+    sessionManager->newExecutive( newExecId );
+    editor->setText(item->text(0));
+
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Dodawanie wykonawcy planu");
+    msgBox.setInformativeText("Do you want to save your changes?");
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    if( sessionManager->getPlans( item->text(0) )
+            .contains( newExecId) )
+        msgBox.setInformativeText("Dodano pomyślnie");
+    else
+        msgBox.setInformativeText("Nie udało się wykonać operacji");
+    msgBox.exec();
+    QMetaObject::invokeMethod(editor, "returnPressed");
+
+    emit executiveAdded();
 }
 
 void SuggestCompletion::autoSuggest()
@@ -148,11 +177,11 @@ void SuggestCompletion::handleNetworkData(QString searched)
         auto strs = elem.split(":");
         if(strs.size() < 3)
             continue;
-        ids << strs[0];
+        ids << strs[0].trimmed().remove("\"");
         choices << strs[1];
         hits << strs[2];
     }
-    showCompletion(choices, hits);
+    showCompletion(ids, choices, hits);
 
 }
 

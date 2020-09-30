@@ -34,7 +34,7 @@ public slots:
     void planReview( const std::string );
     void planState();
     void newPlan( const QString plan = "" );
-    void newExecutive();
+    void newExecutive(const QString plan_id );
     void setState();
     std::string getLastResponse();
 };
